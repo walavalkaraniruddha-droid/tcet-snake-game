@@ -13,26 +13,34 @@
   <div id="main-menu" class="menu-container">
     <h1 class="title">CYBER SNAKE</h1>
     <p class="subtitle">TCET SEM 3 - GROUP 6</p>
-    <button id="btn-single" class="btn btn-primary">PLAY SINGLE PLAYER</button>
-    <button id="btn-multi" class="btn btn-secondary">PLAY MULTIPLAYER (ONLINE)</button>
+    
+    <input type="text" id="player-name" class="name-input" placeholder="Enter Your Name..." maxlength="12">
+    
+    <button id="btn-single" class="btn btn-primary">PLAY SINGLE PLAYER (WITH AI)</button>
+    <button id="btn-multi" class="btn btn-secondary">PLAY MULTIPLAYER ARENA</button>
   </div>
 
-  <!-- GAME UI (Hidden by default) -->
+  <!-- GAME UI -->
   <div id="game-ui" class="game-container hidden">
     <header class="hud">
       <div class="stats">
-        <div class="stat-box">SCORE: <span id="score">0</span></div>
-        <div class="stat-box" id="mode-indicator">MODE: OFFLINE</div>
+        <div class="stat-box" id="p1-score">P1: 0</div>
+        <div class="stat-box" id="mode-indicator">ROUND 1</div>
+        <div class="stat-box" id="p2-score">P2: 0</div>
       </div>
+      <div id="match-wins" class="win-tracker hidden">WINS: 0 - 0</div>
       <button id="ai-toggle" class="btn btn-ai">AI MODE: OFF</button>
     </header>
 
     <div class="canvas-wrapper">
       <canvas id="gameCanvas" width="400" height="400"></canvas>
-      <div id="game-over-overlay" class="overlay hidden">
-        <h2>GAME OVER</h2>
-        <p>Score: <span id="final-score">0</span></p>
-        <button id="restart-btn" class="btn btn-primary">MAIN MENU</button>
+      
+      <!-- DYNAMIC OVERLAY -->
+      <div id="game-overlay" class="overlay hidden">
+        <h2 id="overlay-title">GAME OVER</h2>
+        <p id="overlay-subtext">Score: 0</p>
+        <button id="btn-action" class="btn btn-primary">PLAY AGAIN</button>
+        <button id="btn-menu" class="btn btn-secondary" style="margin-top:10px;">MAIN MENU</button>
       </div>
     </div>
     
