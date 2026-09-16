@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cyber Snake - Group 6</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+  <!-- MAIN MENU -->
+  <div id="main-menu" class="menu-container">
+    <h1 class="title">CYBER SNAKE</h1>
+    <p class="subtitle">TCET SEM 3 - GROUP 6</p>
+    <button id="btn-single" class="btn btn-primary">PLAY SINGLE PLAYER</button>
+    <button id="btn-multi" class="btn btn-secondary">PLAY MULTIPLAYER (ONLINE)</button>
+  </div>
+
+  <!-- GAME UI (Hidden by default) -->
+  <div id="game-ui" class="game-container hidden">
+    <header class="hud">
+      <div class="stats">
+        <div class="stat-box">SCORE: <span id="score">0</span></div>
+        <div class="stat-box" id="mode-indicator">MODE: OFFLINE</div>
+      </div>
+      <button id="ai-toggle" class="btn btn-ai">AI MODE: OFF</button>
+    </header>
+
+    <div class="canvas-wrapper">
+      <canvas id="gameCanvas" width="400" height="400"></canvas>
+      <div id="game-over-overlay" class="overlay hidden">
+        <h2>GAME OVER</h2>
+        <p>Score: <span id="final-score">0</span></p>
+        <button id="restart-btn" class="btn btn-primary">MAIN MENU</button>
+      </div>
+    </div>
+    
+    <!-- Mobile Controls -->
+    <div class="mobile-controls">
+      <button class="d-btn" data-dir="UP">&#9650;</button>
+      <div class="d-mid">
+        <button class="d-btn" data-dir="LEFT">&#9664;</button>
+        <button class="d-btn" data-dir="DOWN">&#9660;</button>
+        <button class="d-btn" data-dir="RIGHT">&#9654;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
