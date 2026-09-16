@@ -190,14 +190,20 @@ function renderMultiplayer(arena) {
     ctx.fillStyle = '#050b14'; ctx.fillRect(0, 0, canvas.width, canvas.height);
     if (arena.state === 'WAITING') return;
 
+    // Draw Food
     ctx.fillStyle = '#ffdd00'; ctx.shadowColor = '#ffdd00'; ctx.shadowBlur = 10;
     ctx.beginPath(); ctx.arc(arena.food.x * GRID_SIZE + 10, arena.food.y * GRID_SIZE + 10, 8, 0, Math.PI*2); ctx.fill();
 
+    // Draw Snakes
     for (let id in arena.players) {
         let p = arena.players[id];
         if (!p.isAlive) continue; 
-        p.snakeQueue.forEach((seg, i) => {
-            const isHead = i === p.snakeQueue.length - 1;
+        
+        // Correctly extract the array from the socket payload
+        let snakeBody = p.snakeQueue.items || p.snakeQueue;
+        
+        snakeBody.forEach((seg, i) => {
+            const isHead = i === snakeBody.length - 1;
             ctx.fillStyle = p.color; ctx.shadowColor = p.color; ctx.shadowBlur = isHead ? 15 : 0;
             ctx.fillRect(seg.x * GRID_SIZE + 1, seg.y * GRID_SIZE + 1, GRID_SIZE - 2, GRID_SIZE - 2);
         });
