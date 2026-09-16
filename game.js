@@ -60,6 +60,10 @@ function resetLocalGame() {
     overlay.classList.add('hidden');
     food = { x: Math.floor(Math.random() * 20), y: Math.floor(Math.random() * 20) };
     
+    isAiMode = false;
+    aiBtn.innerText = "AI MODE: OFF";
+    aiBtn.classList.remove('active');
+    
     if(localGameInterval) clearInterval(localGameInterval);
     localGameInterval = setInterval(localGameLoop, 120);
 }
@@ -199,7 +203,6 @@ function renderMultiplayer(arena) {
         let p = arena.players[id];
         if (!p.isAlive) continue; 
         
-        // Correctly extract the array from the socket payload
         let snakeBody = p.snakeQueue.items || p.snakeQueue;
         
         snakeBody.forEach((seg, i) => {
@@ -244,16 +247,20 @@ function handleInput(dir) {
     }
 }
 
+// FIX: Extracted toggle AI into its own function so both button and key can use it
+function toggleAI() {
+    if (isMultiplayer) return; // AI is only for single player
+    isAiMode = !isAiMode;
+    aiBtn.innerText = `AI MODE: ${isAiMode ? 'ON' : 'OFF'}`;
+    aiBtn.classList.toggle('active', isAiMode);
+}
+
 window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') handleInput('UP');
     if (e.key === 'ArrowDown') handleInput('DOWN');
     if (e.key === 'ArrowLeft') handleInput('LEFT');
     if (e.key === 'ArrowRight') handleInput('RIGHT');
-    if (e.key.toLowerCase() === 'q' && !isMultiplayer) {
-        isAiMode = !isAiMode;
-        aiBtn.innerText = `AI MODE: ${isAiMode ? 'ON' : 'OFF'}`;
-        aiBtn.classList.toggle('active', isAiMode);
-    }
+    if (e.key.toLowerCase() === 'q') toggleAI();
 });
 
 document.querySelectorAll('.d-btn').forEach(btn => {
@@ -262,6 +269,7 @@ document.querySelectorAll('.d-btn').forEach(btn => {
 
 document.getElementById('btn-single').addEventListener('click', startSinglePlayer);
 document.getElementById('btn-multi').addEventListener('click', startMultiplayer);
+aiBtn.addEventListener('click', toggleAI); // FIX: Added the click listener to the button!
 
 btnMenu.addEventListener('click', () => {
     gameUI.classList.add('hidden');
